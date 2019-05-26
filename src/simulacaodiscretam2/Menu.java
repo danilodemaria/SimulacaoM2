@@ -31,9 +31,8 @@ public class Menu extends javax.swing.JFrame {
     public ArrayList<Integer> TEC = new ArrayList<Integer>();
     public ArrayList<Integer> TS = new ArrayList<Integer>();
     public ArrayList<Carro> saida = new ArrayList<Carro>();
-
     public Queue<Carro> chegada = new LinkedList<Carro>();
-    Queue<Carro> fifo = new LinkedList<Carro>();
+    public Queue<Carro> fifo = new LinkedList<Carro>();
 
     public Menu() {
         initComponents();
@@ -607,7 +606,7 @@ public class Menu extends javax.swing.JFrame {
         gravarArq.printf("\nTEMPO MÉDIA NO SISTEMA                               : %d", 100);
         gravarArq.printf("\nCONTATOR DE ENTIDADES                                : %d", 100);
         gravarArq.printf("\nNÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : %d", 100);
-        gravarArq.printf("\nNÚMERO DE CARROS CARROS LAVADOS AO FINAL DA SIMULAÇÃO: %d", 100);
+        gravarArq.printf("\nNÚMERO DE CARROS CARROS LAVADOS AO FINAL DA SIMULAÇÃO: %d", saida.size());
         gravarArq.printf("\n___________________________________________________________");
         gravarArq.printf("\n\nAlunos: Danilo de Maria e Vinicius da Palma Martins");
         gravarArq.printf("\n%s", dataArquivo);
@@ -654,6 +653,7 @@ public class Menu extends javax.swing.JFrame {
             }else{
                 if(servidor.getSair_lavacao() == i){
                     saida.add(servidor);
+                    System.out.println("saiu da lavação i = : "+i);
                     servidor = null;
                 }
             }
@@ -661,6 +661,7 @@ public class Menu extends javax.swing.JFrame {
 
         }
         System.out.println("quantidade de lavados: "+ saida.size());
+        geraRelatorio();
 
     }
 
