@@ -15,7 +15,7 @@ public class Carro {
     private int TEC;
     private int TS;
     private int entrar_fila;
-    private int entrar_lavacao;
+    private int sair_lavacao;
     private int tempo_fila;
     private int tempo_lavacao;
 
@@ -62,20 +62,6 @@ public class Carro {
     }
 
     /**
-     * @return the entrar_lavacao
-     */
-    public int getEntrar_lavacao() {
-        return entrar_lavacao;
-    }
-
-    /**
-     * @param entrar_lavacao the entrar_lavacao to set
-     */
-    public void setEntrar_lavacao(int entrar_lavacao) {
-        this.entrar_lavacao = entrar_lavacao;
-    }
-
-    /**
      * @return the tempo_fila
      */
     public int getTempo_fila() {
@@ -101,6 +87,20 @@ public class Carro {
      */
     public void setTempo_lavacao(int tempo_lavacao) {
         this.tempo_lavacao = tempo_lavacao;
+    }
+
+    /**
+     * @return the sair_lavacao
+     */
+    public int getSair_lavacao() {
+        return sair_lavacao;
+    }
+
+    /**
+     * @param sair_lavacao the sair_lavacao to set
+     */
+    public void setSair_lavacao(int sair_lavacao) {
+        this.sair_lavacao = sair_lavacao;
     }
 }
 

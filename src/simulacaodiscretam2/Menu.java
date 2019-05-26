@@ -643,8 +643,24 @@ public class Menu extends javax.swing.JFrame {
                 chegada.poll();
                 System.out.println("Carro na fila: i = " + i);
             }
+            
+            if(servidor == null){
+                servidor = fifo.poll();
+                if(servidor!= null){
+                    servidor.setSair_lavacao(i + servidor.getTS());
+                    System.out.println("entrou lavação i = " + i);
+                }
+                
+            }else{
+                if(servidor.getSair_lavacao() == i){
+                    saida.add(servidor);
+                    servidor = null;
+                }
+            }
+            
 
         }
+        System.out.println("quantidade de lavados: "+ saida.size());
 
     }
 
