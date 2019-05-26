@@ -6,7 +6,6 @@ import Utils.ViewTriangular;
 import Utils.ViewUniforme;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
