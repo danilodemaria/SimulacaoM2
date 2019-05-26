@@ -469,6 +469,7 @@ public class Menu extends javax.swing.JFrame {
 
             if (radioDeterministico.isSelected()) {
                 TECfixo = Integer.parseInt(textTEC.getText());
+                System.out.println(TECfixo);
                 escreve_arquivo("TEC", TECfixo);
             } else {
                 verificaTEC();
@@ -649,7 +650,7 @@ public class Menu extends javax.swing.JFrame {
                     chegada.add(novo_carro);
                     System.out.println("Carro na fila: i = " + i);
                 }else{
-                    if((fifo.size() < limiteFila) && comFila){
+                    if(fifo.size() < limiteFila){
                         fifo.add(entrada);
                         chegada.poll();
                         Carro novo_carro = new Carro(); //para cada i é criado um carro
@@ -659,6 +660,12 @@ public class Menu extends javax.swing.JFrame {
                         chegada.add(novo_carro);
                         System.out.println("Carro na fila: i = " + i);
                     }else{
+                        chegada.poll();
+                        Carro novo_carro = new Carro(); //para cada i é criado um carro
+                        novo_carro.setTEC(TEC.get(i));  //valor gerado é colocado para a chegada
+                        novo_carro.setTS(TS.get(i));    //valor gerado é colocado para o TS
+                        novo_carro.setEntrar_fila(i + carro.getTEC()); //momento i em que entrará no sistema
+                        chegada.add(novo_carro);
                         System.out.println("fila cheia!");
                     }
                 
@@ -711,21 +718,13 @@ public class Menu extends javax.swing.JFrame {
         FileWriter arq = null;
         try {
             arq = new FileWriter(nome + ".txt");
+            PrintWriter gravarArq = new PrintWriter(arq);
+            for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
+                gravarArq.printf("%d\n", valor);
+            }
+            arq.close();
         } catch (IOException ex) {
             Logger.getLogger(ViewExponencial.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-      
-        
-        PrintWriter gravarArq = new PrintWriter(arq);
-        for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
-            gravarArq.printf("%d\n", valor);
-        }
-
-        try {
-            arq.close();
-        } catch (Exception e) {
-            System.out.println("Erro: " + e);
         }
     }
 
