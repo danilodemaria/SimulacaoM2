@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import simulacaodiscretam2.Menu;
 
 public class ViewExponencial extends javax.swing.JFrame {
 

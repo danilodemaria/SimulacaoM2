@@ -6,24 +6,18 @@ import Utils.ViewTriangular;
 import Utils.ViewUniforme;
 import java.io.BufferedReader;
 import java.io.FileReader;
-<<<<<<< HEAD
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.Thread.sleep;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-=======
-import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.PrintWriter;
 
 /**
  *
@@ -37,16 +31,9 @@ public class Menu extends javax.swing.JFrame {
     public ArrayList<Integer> TEC = new ArrayList<Integer>();
     public ArrayList<Integer> TS = new ArrayList<Integer>();
     public ArrayList<Carro> saida = new ArrayList<Carro>();
-<<<<<<< HEAD
 
     public Queue<Carro> chegada = new LinkedList<Carro>();
     Queue<Carro> fifo = new LinkedList<Carro>();
-=======
-    
-    public Queue<Carro> chegada = new LinkedList<Carro>();
-    Queue<Carro> fifo = new LinkedList<Carro>();
-    
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
 
     public Menu() {
         initComponents();
@@ -301,7 +288,6 @@ public class Menu extends javax.swing.JFrame {
                                     .addComponent(textTS, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(radioDetTS)
-<<<<<<< HEAD
                                 .addGap(18, 18, 18)
                                 .addComponent(radioAleaTS))
                             .addGroup(layout.createSequentialGroup()
@@ -309,15 +295,6 @@ public class Menu extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(radio10)
                                 .addGap(18, 18, 18)
-=======
-                                .addGap(18, 18, 18)
-                                .addComponent(radioAleaTS))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addGap(18, 18, 18)
-                                .addComponent(radio10)
-                                .addGap(18, 18, 18)
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
                                 .addComponent(radio100))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
@@ -600,7 +577,7 @@ public class Menu extends javax.swing.JFrame {
         }
     }
 
-    public void geraRelatorioSaida() {
+    public void geraRelatorio() {
         String dataArquivo = null;
         FileWriter arq = null;
         Date now = new Date();
@@ -640,7 +617,6 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Erro: " + e);
         }
-
     }
 
     public void calculaGeral(boolean comFila, int limiteFila, int tempoAvanco) throws InterruptedException {
@@ -651,37 +627,22 @@ public class Menu extends javax.swing.JFrame {
         TEC = le_arquivo("TEC.txt"); //leitura dos valores de TEC
         TS = le_arquivo("TS.txt");  //leitura dos valores de TS
         Carro servidor = null;
-<<<<<<< HEAD
 
         for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
 
-=======
-        
-       for(int i = 0; i < Double.parseDouble(numSimu.getText()); i++){
-           
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
             Carro carro = new Carro(); //para cada i é criado um carro
             carro.setTEC(TEC.get(i));  //valor gerado é colocado para a chegada
             carro.setTS(TS.get(i));    //valor gerado é colocado para o TS
             carro.setEntrar_fila(i + carro.getTEC()); //momento i em que entrará no sistema
-<<<<<<< HEAD
 
             chegada.add(carro);
 
             Carro entrada = chegada.peek();
             if (i == entrada.getEntrar_fila()) {
-=======
-           
-            chegada.add(carro);
-           
-            Carro entrada = chegada.peek();
-            if(i == entrada.getEntrar_fila()){
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
                 fifo.add(entrada);
                 chegada.poll();
                 System.out.println("Carro na fila: i = " + i);
             }
-<<<<<<< HEAD
 
         }
 
@@ -702,36 +663,7 @@ public class Menu extends javax.swing.JFrame {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-=======
-           
-           
-           
-           
-           
-       }
-        
-        
->>>>>>> 103cac24d10a7c3974716ecde724cb7413d30b85
 
-        return valores;
-    }
-    
-    public ArrayList<Integer> le_arquivo(String nome){
-        
-        ArrayList<Integer> valores = new ArrayList<Integer>();
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(nome));
-            while(br.ready()){
-                String linha = br.readLine();
-                linha = linha.replace(",", ".");
-                Double var = Double.parseDouble(linha);
-                valores.add(var.intValue());
-            }
-        br.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-        }
-        
         return valores;
     }
 
