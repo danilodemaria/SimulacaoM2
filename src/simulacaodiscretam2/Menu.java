@@ -27,6 +27,8 @@ public class Menu extends javax.swing.JFrame {
     public int option = -1;
     public int TECfixo = -1;
     public int TSfixo = -1;
+    public double mediaFila = 0;
+    public double mediaServidor = 0;
     public ArrayList<Integer> TEC = new ArrayList<Integer>();
     public ArrayList<Integer> TS = new ArrayList<Integer>();
     public ArrayList<Carro> saida = new ArrayList<Carro>();
@@ -469,14 +471,22 @@ public class Menu extends javax.swing.JFrame {
             if (radioDeterministico.isSelected()) {
                 TECfixo = Integer.parseInt(textTEC.getText());
                 System.out.println(TECfixo);
-                escreve_arquivo("TEC", TECfixo);
+                try {
+                    escreve_arquivo("TEC", TECfixo);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 verificaTEC();
             }
 
             if (radioDetTS.isSelected()) {
                 TSfixo = Integer.parseInt(textTS.getText());
-                escreve_arquivo("TS", TSfixo);
+                try {
+                    escreve_arquivo("TS", TSfixo);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 verificaTS();
             }
@@ -602,8 +612,8 @@ public class Menu extends javax.swing.JFrame {
 
         gravarArq.printf("\t\t--RESULTADO LAVAÇÃO DE CARROS--\n");
         gravarArq.printf("___________________________________________________________");
-        gravarArq.printf("\nNÚMERO MÉDIO DE ENTIDADES NA FILA                    : %d", 100);
-        gravarArq.printf("\nTAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : %d", 100);
+        gravarArq.printf("\nNÚMERO MÉDIO DE ENTIDADES NA FILA                    : %.3f", (mediaFila/(Double.parseDouble(numSimu.getText()))));
+        gravarArq.printf("\nTAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : %.3f", (mediaServidor/(Double.parseDouble(numSimu.getText()))));
         gravarArq.printf("\nTEMPO MÉDIA DE UMA ENTIDADE NA FILA                  : %d", 100);
         gravarArq.printf("\nTEMPO MÉDIA NO SISTEMA                               : %d", 100);
         gravarArq.printf("\nCONTATOR DE ENTIDADES                                : %d", 100);
@@ -637,10 +647,11 @@ public class Menu extends javax.swing.JFrame {
 
         for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
             System.out.println("Iteração número: "+i);
-            Carro entrada = chegada.peek();
+            mediaFila = mediaFila + fifo.size();
+            Carro entrada = chegada.peek();            
             if (i == entrada.getEntrar_fila()) {
                 if(!comFila){
-                    fifo.add(entrada);
+                    fifo.add(entrada);                    
                     chegada.poll();
                     Carro novo_carro = new Carro(); //para cada i é criado um carro
                     novo_carro.setTEC(TEC.get(i));  //valor gerado é colocado para a chegada
@@ -671,7 +682,7 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
             
-            if(servidor == null){
+            if(servidor == null){                
                 servidor = fifo.poll();
                 if(servidor!= null){
                     servidor.setSair_lavacao(i + servidor.getTS());
@@ -679,6 +690,7 @@ public class Menu extends javax.swing.JFrame {
                 }
                 
             }else{
+                mediaServidor++;
                 if(servidor.getSair_lavacao() == i){
                     saida.add(servidor);
                     System.out.println("saiu da lavação i = : "+i);
@@ -712,19 +724,22 @@ public class Menu extends javax.swing.JFrame {
         return valores;
     }
     
-    public void escreve_arquivo(String nome, int valor){
+    public void escreve_arquivo(String nome, int valor) throws IOException{
         
         FileWriter arq = null;
         try {
             arq = new FileWriter(nome + ".txt");
             PrintWriter gravarArq = new PrintWriter(arq);
-            for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
+            for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {                
                 gravarArq.printf("%d\n", valor);
             }
             arq.close();
         } catch (IOException ex) {
             Logger.getLogger(ViewExponencial.class.getName()).log(Level.SEVERE, null, ex);
+            arq.close();
         }
+        
+        arq.close();
     }
 
     public boolean validacoes() {
