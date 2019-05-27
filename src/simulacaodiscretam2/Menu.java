@@ -538,11 +538,15 @@ public class Menu extends javax.swing.JFrame {
                 calculaGeral(true, Integer.parseInt(textLimite.getText()), option);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
                 calculaGeral(false, 0, option);
             } catch (InterruptedException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -634,7 +638,7 @@ public class Menu extends javax.swing.JFrame {
         }
     }
 
-    public void calculaGeral(boolean comFila, int limiteFila, int tempoAvanco) throws InterruptedException {
+    public void calculaGeral(boolean comFila, int limiteFila, int tempoAvanco) throws InterruptedException, IOException {
         // recebe true se for com fila e o limte da fila
         // se receber false, limite da fila é zero, ou seja, sem limite
         // tempo avanço 1 para 10, 2 para 100, 3 para 1000 e 4 sem parar
@@ -715,6 +719,8 @@ public class Menu extends javax.swing.JFrame {
         }
         System.out.println("quantidade de lavados: "+ saida.size());
         geraRelatorio();
+        ProcessBuilder pb = new ProcessBuilder("Notepad.exe", "Resultado.txt");
+        pb.start();
 
     }
 
