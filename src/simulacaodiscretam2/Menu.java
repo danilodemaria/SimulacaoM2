@@ -27,8 +27,12 @@ public class Menu extends javax.swing.JFrame {
     public int option = -1;
     public int TECfixo = -1;
     public int TSfixo = -1;
+    public int contadorEntidades = 0;
+    public int simultaneos = 0;
     public double mediaFila = 0;
     public double mediaServidor = 0;
+    public double TempoMedioFIla = 0;
+    public double TempoMedioSistema = 0;
     public ArrayList<Integer> TEC = new ArrayList<Integer>();
     public ArrayList<Integer> TS = new ArrayList<Integer>();
     public ArrayList<Carro> saida = new ArrayList<Carro>();
@@ -614,11 +618,11 @@ public class Menu extends javax.swing.JFrame {
         gravarArq.printf("___________________________________________________________");
         gravarArq.printf("\nNÚMERO MÉDIO DE ENTIDADES NA FILA                    : %.3f", (mediaFila/(Double.parseDouble(numSimu.getText()))));
         gravarArq.printf("\nTAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : %.3f", (mediaServidor/(Double.parseDouble(numSimu.getText()))));
-        gravarArq.printf("\nTEMPO MÉDIA DE UMA ENTIDADE NA FILA                  : %d", 100);
-        gravarArq.printf("\nTEMPO MÉDIA NO SISTEMA                               : %d", 100);
-        gravarArq.printf("\nCONTATOR DE ENTIDADES                                : %d", 100);
-        gravarArq.printf("\nNÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : %d", 100);
-        gravarArq.printf("\nNÚMERO DE CARROS CARROS LAVADOS AO FINAL DA SIMULAÇÃO: %d", saida.size());
+        gravarArq.printf("\nTEMPO MÉDIO DE UMA ENTIDADE NA FILA                  : %.3f", (TempoMedioFIla/saida.size()));
+        gravarArq.printf("\nTEMPO MÉDIO NO SISTEMA                               : %.3f", (TempoMedioSistema/saida.size()));
+        gravarArq.printf("\nCONTADOR DE ENTIDADES                                : %d", contadorEntidades);
+        gravarArq.printf("\nNÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : %d", simultaneos);
+        gravarArq.printf("\nNÚMERO DE CARROS LAVADOS AO FINAL DA SIMULAÇÃO       : %d", saida.size());
         gravarArq.printf("\n___________________________________________________________");
         gravarArq.printf("\n\nAlunos: Danilo de Maria e Vinicius da Palma Martins");
         gravarArq.printf("\n%s", dataArquivo);
@@ -635,6 +639,7 @@ public class Menu extends javax.swing.JFrame {
         // se receber false, limite da fila é zero, ou seja, sem limite
         // tempo avanço 1 para 10, 2 para 100, 3 para 1000 e 4 sem parar
         // sleep(2000);
+        int cont_servidor = 0;
         TEC = le_arquivo("TEC.txt"); //leitura dos valores de TEC
         TS = le_arquivo("TS.txt");  //leitura dos valores de TS
         Carro servidor = null;
@@ -685,7 +690,10 @@ public class Menu extends javax.swing.JFrame {
             if(servidor == null){                
                 servidor = fifo.poll();
                 if(servidor!= null){
+                    cont_servidor = 1;
+                    servidor.setTempo_fila(i - servidor.getEntrar_fila());
                     servidor.setSair_lavacao(i + servidor.getTS());
+                    contadorEntidades++;
                     System.out.println("entrou lavação i = " + i);
                 }
                 
@@ -694,10 +702,15 @@ public class Menu extends javax.swing.JFrame {
                 if(servidor.getSair_lavacao() == i){
                     saida.add(servidor);
                     System.out.println("saiu da lavação i = : "+i);
+                    TempoMedioFIla += servidor.getTempo_fila();
+                    TempoMedioSistema += (i - servidor.getEntrar_fila());
                     servidor = null;
+                    cont_servidor = 0;
                 }
             }
-            
+            if((fifo.size() + cont_servidor) > simultaneos){
+                simultaneos = fifo.size() + cont_servidor;
+            }
             System.out.println("Carros que estão na fila: "+fifo.size());
         }
         System.out.println("quantidade de lavados: "+ saida.size());
