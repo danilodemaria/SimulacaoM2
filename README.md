@@ -8,7 +8,7 @@ Esta é a documentação do software criado para a matéria de Simulação Discr
 
 Abaixo segue uma figura completa da aplicação de usuário
 
-![alt text](01.png) 
+![alt text](Imagens/01.png) 
 
 Informação 01: Na pasta raiz do projeto, após o primeiro teste, irá conter três arquivos no formato .txt.  O primeiro arquivo chamado “TEC.txt”, é gerado conforme a escolha do usuário, também é importante ressaltar que caso a pessoa que está realizando teste precise verificar os números que foram gerados estão corretos, será necessário abrir esse arquivo com um editor de texto mais robusto como sublime ou VSCode, pois o bloco de notas do Windows apresenta caracteres aleatórios. Esse arquivo “TEC.txt” irá conter os dados gerados pelo primeiro parâmetro definido pelo usuário, que é o Tempo entre Chegadas. Esse tempo pode ser determinístico, na qual a soma das probabilidades irá resultar em um valor inteiro, normalmente 1. Caso o usuário escolha um tempo entre chegadas aleatórios, poderá ser exponencial, uniforme, normal ou triangular. Abaixo segue 3 figuras, a primeira ilustra qual forma o usuário irá definir estes parâmetros, a segunda mostra o arquivo gerado de forma determinística, e por fim o arquivo gerado por uma função aleatório exponencial.
 Interface gráfica da definição do parâmetro TEC 
