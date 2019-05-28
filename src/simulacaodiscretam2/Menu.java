@@ -668,15 +668,15 @@ public class Menu extends javax.swing.JFrame {
         System.out.println("tempo avanco: " + tempoAvanco );
 
         for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
-            if(tempoAvanco != 4){
-                if(x == cont_tempo){
-                    x = 0;
-                    JOptionPane.showMessageDialog(null,
-                        "Carros na fila: " + fifo.size() + "\nCarros em andamento: "
-                                + cont_servidor + "\nCarros já lavados: " + saida.size(),
-                                "Informação", JOptionPane.INFORMATION_MESSAGE);
+            
+            if(x == cont_tempo && tempoAvanco != 4){
+                x = 0;
+                JOptionPane.showMessageDialog(null,
+                    "Carros na fila: " + fifo.size() + "\nCarros em andamento: "
+                        + cont_servidor + "\nCarros já lavados: " + saida.size(),
+                        "Informação", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }
+            
             System.out.println("Iteração número: "+i);
             mediaFila = mediaFila + fifo.size();
             Carro entrada = chegada.peek();            
