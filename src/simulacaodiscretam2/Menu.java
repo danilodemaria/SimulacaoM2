@@ -643,9 +643,21 @@ public class Menu extends javax.swing.JFrame {
         // se receber false, limite da fila é zero, ou seja, sem limite
         // tempo avanço 1 para 10, 2 para 100, 3 para 1000 e 4 sem parar
         // sleep(2000);
-        int cont_servidor = 0;
+        int cont_servidor = 0, x = 0, cont_tempo = 0;
         TEC = le_arquivo("TEC.txt"); //leitura dos valores de TEC
         TS = le_arquivo("TS.txt");  //leitura dos valores de TS
+        
+        if(tempoAvanco == 1){
+            cont_tempo = 10;
+        }
+        if(tempoAvanco == 2){
+            cont_tempo = 100;
+        }
+        if(tempoAvanco == 3){
+            cont_tempo = 1000;
+        }
+        
+        
         Carro servidor = null;
         
         Carro carro = new Carro(); //para cada i é criado um carro
@@ -653,8 +665,18 @@ public class Menu extends javax.swing.JFrame {
         carro.setTS(TS.get(0));    //valor gerado é colocado para o TS
         carro.setEntrar_fila(carro.getTEC()); //momento i em que entrará no sistema
         chegada.add(carro);
+        System.out.println("tempo avanco: " + tempoAvanco );
 
         for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
+            if(tempoAvanco != 4){
+                if(x == cont_tempo){
+                    x = 0;
+                    JOptionPane.showMessageDialog(null,
+                        "Carros na fila: " + fifo.size() + "\nCarros em andamento: "
+                                + cont_servidor + "\nCarros já lavados: " + saida.size(),
+                                "Informação", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
             System.out.println("Iteração número: "+i);
             mediaFila = mediaFila + fifo.size();
             Carro entrada = chegada.peek();            
@@ -716,10 +738,12 @@ public class Menu extends javax.swing.JFrame {
                 simultaneos = fifo.size() + cont_servidor;
             }
             System.out.println("Carros que estão na fila: "+fifo.size());
+            x++;
         }
         System.out.println("quantidade de lavados: "+ saida.size());
         geraRelatorio();
         ProcessBuilder pb = new ProcessBuilder("Notepad.exe", "Resultado.txt");
+        //ProcessBuilder pb = new ProcessBuilder("kate", "Resultado.txt"); // para rodar no linux usar esse
         pb.start();
 
     }
