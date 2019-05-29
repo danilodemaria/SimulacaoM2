@@ -1,13 +1,13 @@
 		--RESULTADO LAVAÇÃO DE CARROS--
 ___________________________________________________________
-NÚMERO MÉDIO DE ENTIDADES NA FILA                    : 24,010
-TAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : 0,490
-TEMPO MÉDIO DE UMA ENTIDADE NA FILA                  : 24,000
-TEMPO MÉDIO NO SISTEMA                               : 25,000
-CONTADOR DE ENTIDADES                                : 50
-NÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : 50
-NÚMERO DE CARROS LAVADOS AO FINAL DA SIMULAÇÃO       : 49
+NÚMERO MÉDIO DE ENTIDADES NA FILA                    : 9,733
+TAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : 0,832
+TEMPO MÉDIO DE UMA ENTIDADE NA FILA                  : 57,906
+TEMPO MÉDIO NO SISTEMA                               : 62,875
+CONTADOR DE ENTIDADES                                : 1675
+NÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : 11
+NÚMERO DE CARROS LAVADOS AO FINAL DA SIMULAÇÃO       : 1674
 ___________________________________________________________
 
 Alunos: Danilo de Maria e Vinicius da Palma Martins
-Terça-feira, 28 de Maio de 2019.
+Quarta-feira, 29 de Maio de 2019.

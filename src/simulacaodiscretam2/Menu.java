@@ -620,10 +620,10 @@ public class Menu extends javax.swing.JFrame {
 
         gravarArq.printf("\t\t--RESULTADO LAVAÇÃO DE CARROS--\n");
         gravarArq.printf("___________________________________________________________");
-        gravarArq.printf("\nNÚMERO MÉDIO DE ENTIDADES NA FILA                    : %.3f", (mediaFila/(Double.parseDouble(numSimu.getText()))));
-        gravarArq.printf("\nTAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : %.3f", (mediaServidor/(Double.parseDouble(numSimu.getText()))));
-        gravarArq.printf("\nTEMPO MÉDIO DE UMA ENTIDADE NA FILA                  : %.3f", (TempoMedioFIla/saida.size()));
-        gravarArq.printf("\nTEMPO MÉDIO NO SISTEMA                               : %.3f", (TempoMedioSistema/saida.size()));
+        gravarArq.printf("\nNÚMERO MÉDIO DE ENTIDADES NA FILA                    : %.3f", (mediaFila / (Double.parseDouble(numSimu.getText()))));
+        gravarArq.printf("\nTAXA MÉDIA DE OCUPAÇÃO DO SERVIDOR                   : %.3f", (mediaServidor / (Double.parseDouble(numSimu.getText()))));
+        gravarArq.printf("\nTEMPO MÉDIO DE UMA ENTIDADE NA FILA                  : %.3f", (TempoMedioFIla / saida.size()));
+        gravarArq.printf("\nTEMPO MÉDIO NO SISTEMA                               : %.3f", (TempoMedioSistema / saida.size()));
         gravarArq.printf("\nCONTADOR DE ENTIDADES                                : %d", contadorEntidades);
         gravarArq.printf("\nNÚMERO MÁXIMO DE ENTIDADES SIMULTÂNEAS NO SISTEMA    : %d", simultaneos);
         gravarArq.printf("\nNÚMERO DE CARROS LAVADOS AO FINAL DA SIMULAÇÃO       : %d", saida.size());
@@ -643,46 +643,46 @@ public class Menu extends javax.swing.JFrame {
         // se receber false, limite da fila é zero, ou seja, sem limite
         // tempo avanço 1 para 10, 2 para 100, 3 para 1000 e 4 sem parar
         // sleep(2000);
+        limpaCache();
         int cont_servidor = 0, x = 0, cont_tempo = 0;
         TEC = le_arquivo("TEC.txt"); //leitura dos valores de TEC
         TS = le_arquivo("TS.txt");  //leitura dos valores de TS
-        
-        if(tempoAvanco == 1){
+
+        if (tempoAvanco == 1) {
             cont_tempo = 10;
         }
-        if(tempoAvanco == 2){
+        if (tempoAvanco == 2) {
             cont_tempo = 100;
         }
-        if(tempoAvanco == 3){
+        if (tempoAvanco == 3) {
             cont_tempo = 1000;
         }
-        
-        
+
         Carro servidor = null;
-        
+
         Carro carro = new Carro(); //para cada i é criado um carro
         carro.setTEC(TEC.get(0));  //valor gerado é colocado para a chegada
         carro.setTS(TS.get(0));    //valor gerado é colocado para o TS
         carro.setEntrar_fila(carro.getTEC()); //momento i em que entrará no sistema
         chegada.add(carro);
-        System.out.println("tempo avanco: " + tempoAvanco );
+        System.out.println("tempo avanco: " + tempoAvanco);
 
         for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
-            
-            if(x == cont_tempo && tempoAvanco != 4){
+
+            if (x == cont_tempo && tempoAvanco != 4) {
                 x = 0;
                 JOptionPane.showMessageDialog(null,
-                    "Carros na fila: " + fifo.size() + "\nCarros em andamento: "
+                        "Carros na fila: " + fifo.size() + "\nCarros em andamento: "
                         + cont_servidor + "\nCarros já lavados: " + saida.size(),
                         "Informação", JOptionPane.INFORMATION_MESSAGE);
-                }
-            
-            System.out.println("Iteração número: "+i);
+            }
+
+            System.out.println("Iteração número: " + i);
             mediaFila = mediaFila + fifo.size();
-            Carro entrada = chegada.peek();            
+            Carro entrada = chegada.peek();
             if (i == entrada.getEntrar_fila()) {
-                if(!comFila){
-                    fifo.add(entrada);                    
+                if (!comFila) {
+                    fifo.add(entrada);
                     chegada.poll();
                     Carro novo_carro = new Carro(); //para cada i é criado um carro
                     novo_carro.setTEC(TEC.get(i));  //valor gerado é colocado para a chegada
@@ -690,8 +690,8 @@ public class Menu extends javax.swing.JFrame {
                     novo_carro.setEntrar_fila(i + carro.getTEC()); //momento i em que entrará no sistema
                     chegada.add(novo_carro);
                     System.out.println("Carro na fila: i = " + i);
-                }else{
-                    if(fifo.size() < limiteFila){
+                } else {
+                    if (fifo.size() < limiteFila) {
                         fifo.add(entrada);
                         chegada.poll();
                         Carro novo_carro = new Carro(); //para cada i é criado um carro
@@ -700,7 +700,7 @@ public class Menu extends javax.swing.JFrame {
                         novo_carro.setEntrar_fila(i + carro.getTEC()); //momento i em que entrará no sistema
                         chegada.add(novo_carro);
                         System.out.println("Carro na fila: i = " + i);
-                    }else{
+                    } else {
                         chegada.poll();
                         Carro novo_carro = new Carro(); //para cada i é criado um carro
                         novo_carro.setTEC(TEC.get(i));  //valor gerado é colocado para a chegada
@@ -709,43 +709,57 @@ public class Menu extends javax.swing.JFrame {
                         chegada.add(novo_carro);
                         System.out.println("fila cheia!");
                     }
-                
+
                 }
             }
-            
-            if(servidor == null){                
+
+            if (servidor == null) {
                 servidor = fifo.poll();
-                if(servidor!= null){
+                if (servidor != null) {
                     cont_servidor = 1;
                     servidor.setTempo_fila(i - servidor.getEntrar_fila());
                     servidor.setSair_lavacao(i + servidor.getTS());
                     contadorEntidades++;
                     System.out.println("entrou lavação i = " + i);
                 }
-                
-            }else{
+
+            } else {
                 mediaServidor++;
-                if(servidor.getSair_lavacao() == i){
+                if (servidor.getSair_lavacao() == i) {
                     saida.add(servidor);
-                    System.out.println("saiu da lavação i = : "+i);
+                    System.out.println("saiu da lavação i = : " + i);
                     TempoMedioFIla += servidor.getTempo_fila();
                     TempoMedioSistema += (i - servidor.getEntrar_fila());
                     servidor = null;
                     cont_servidor = 0;
                 }
             }
-            if((fifo.size() + cont_servidor) > simultaneos){
+            if ((fifo.size() + cont_servidor) > simultaneos) {
                 simultaneos = fifo.size() + cont_servidor;
             }
-            System.out.println("Carros que estão na fila: "+fifo.size());
+            System.out.println("Carros que estão na fila: " + fifo.size());
             x++;
         }
-        System.out.println("quantidade de lavados: "+ saida.size());
+        System.out.println("quantidade de lavados: " + saida.size());
         geraRelatorio();
         ProcessBuilder pb = new ProcessBuilder("Notepad.exe", "Resultado.txt");
         //ProcessBuilder pb = new ProcessBuilder("kate", "Resultado.txt"); // para rodar no linux usar esse
         pb.start();
 
+    }
+
+    public void limpaCache() {
+        contadorEntidades = 0;
+        simultaneos = 0;
+        mediaFila = 0;
+        mediaServidor = 0;
+        TempoMedioFIla = 0;
+        TempoMedioSistema = 0;
+        TEC.clear();
+        TS.clear();
+        saida.clear();
+        chegada.clear();
+        fifo.clear();
     }
 
     public ArrayList<Integer> le_arquivo(String nome) {
@@ -766,14 +780,14 @@ public class Menu extends javax.swing.JFrame {
 
         return valores;
     }
-    
-    public void escreve_arquivo(String nome, int valor) throws IOException{
-        
+
+    public void escreve_arquivo(String nome, int valor) throws IOException {
+
         FileWriter arq = null;
         try {
             arq = new FileWriter(nome + ".txt");
             PrintWriter gravarArq = new PrintWriter(arq);
-            for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {                
+            for (int i = 0; i < Double.parseDouble(numSimu.getText()); i++) {
                 gravarArq.printf("%d\n", valor);
             }
             arq.close();
@@ -781,7 +795,7 @@ public class Menu extends javax.swing.JFrame {
             Logger.getLogger(ViewExponencial.class.getName()).log(Level.SEVERE, null, ex);
             arq.close();
         }
-        
+
         arq.close();
     }
 
